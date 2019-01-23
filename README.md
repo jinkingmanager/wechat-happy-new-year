@@ -16,7 +16,7 @@ sudo apt-get install python3 python3-pip
 pip3 install itchat
 ```
 
-关于itchar，可以参考这里：https://itchat.readthedocs.io/zh/latest/
+关于itchat，可以参考这里：https://itchat.readthedocs.io/zh/latest/
 
 #### 配置pycharm开发环境
 
