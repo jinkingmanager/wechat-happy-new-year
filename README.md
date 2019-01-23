@@ -85,13 +85,13 @@ def writeToFriendFile(filename,nameDict):
 附上代码：
 
 ```python
-#coding=utf8
+# coding=utf8
 import itchat, time, os
 
 from local_file_handle import getDictFromFriendFile
 from local_file_handle import writeToFriendFile
 
-itchat.auto_login(hotReload=True) # 记录登录数据
+itchat.auto_login(hotReload=True)  # 记录登录数据
 
 SINCERE_WISH = u'2019万事如意 春节快乐呀，%s'
 
@@ -106,7 +106,7 @@ friendList = allFriendList[1:]
 print("total friends:", len(friendList))
 
 # 发送数目统计
-send_count=0
+send_count = 0
 
 filePath = myself['NickName'] + "-wechat-friends.json"
 
@@ -124,9 +124,13 @@ else:
 
     writeToFriendFile(filePath, totalDict)
     print("您的friend列表文件已经创建成功，文件名：", filePath)
+    time.sleep(.2)
     print("现在可以去修改文件中冒号后面的称呼，切记，单引号要存在，冒号之前的数据千万不要修改!")
+    time.sleep(.3)
     print("如果希望直接以称呼名为准，请在称呼名后加入‘-’，否则默认在称呼名后加上”同学“二字!")
+    time.sleep(.2)
     print("如果不希望给某人发信息，直接删除对应行即可")
+    time.sleep(.3)
     print("修改完成后，请重新运行当前脚本")
     # 记得手动在里面改文件里面冒号后面的称呼，如果希望直接以称呼名为准，请在称呼名后加入‘-’，否则默认在称呼名后加上”同学“二字
     # namesDict = getDictFromFriendFile(filePath)
@@ -139,31 +143,28 @@ if namesDict:
 
 for friend in friendList:
     # 如果是演示目的，把下面的方法改为print即可
-    #itchat.send()
+    # 正式需要发送，把 itchat.send 那一行前面的＃删掉即可
     if namesDict.get(friend['NickName']):
         showName = namesDict[friend['NickName']]
 
         # 如果包含“-”，则直接replace掉“-”，不添加Title
         if '-' in showName:
-            print(SINCERE_WISH % showName.replace('-',''), friend['UserName'])
+            # itchat.send(SINCERE_WISH % showName.replace('-', ''), friend['UserName'])
+            print(SINCERE_WISH % showName.replace('-', ''), friend['UserName'])
         else:
-            newHappyNewYear = SINCERE_WISH + Title
-            # print(SINCERE_WISH % showName,Title)
-            print(newHappyNewYear % showName, friend['UserName'])
+            happyNewYear = SINCERE_WISH + Title
+            # itchat.send(happyNewYear % showName, friend['UserName'])
+            print(happyNewYear % showName, friend['UserName'])
 
         send_count = send_count + 1
         time.sleep(.5)
     else:
         notSendList.append(friend)
 
-    # print(SINCERE_WISH % (friend['DisplayName']
-    #      or friend['NickName']), friend['UserName'])
-    # time.sleep(.5)
-
 if namesDict:
-    print("send count",send_count)
+    print("send count", send_count)
 
-    print("unsend count",len(notSendList))
+    print("unsend count", len(notSendList))
     print(notSendList)
 ```
 
