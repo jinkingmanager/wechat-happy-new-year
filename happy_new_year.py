@@ -1,10 +1,10 @@
-#coding=utf8
+# coding=utf8
 import itchat, time, os
 
 from local_file_handle import getDictFromFriendFile
 from local_file_handle import writeToFriendFile
 
-itchat.auto_login(hotReload=True) # 记录登录数据
+itchat.auto_login(hotReload=True)  # 记录登录数据
 
 SINCERE_WISH = u'2019万事如意 春节快乐呀，%s'
 
@@ -19,7 +19,7 @@ friendList = allFriendList[1:]
 print("total friends:", len(friendList))
 
 # 发送数目统计
-send_count=0
+send_count = 0
 
 filePath = myself['NickName'] + "-wechat-friends.json"
 
@@ -56,29 +56,26 @@ if namesDict:
 
 for friend in friendList:
     # 如果是演示目的，把下面的方法改为print即可
-    #itchat.send()
+    # 正式需要发送，把 itchat.send 那一行前面的＃删掉即可
     if namesDict.get(friend['NickName']):
         showName = namesDict[friend['NickName']]
 
         # 如果包含“-”，则直接replace掉“-”，不添加Title
         if '-' in showName:
-            print(SINCERE_WISH % showName.replace('-',''), friend['UserName'])
+            # itchat.send(SINCERE_WISH % showName.replace('-', ''), friend['UserName'])
+            print(SINCERE_WISH % showName.replace('-', ''), friend['UserName'])
         else:
-            newHappyNewYear = SINCERE_WISH + Title
-            # print(SINCERE_WISH % showName,Title)
-            print(newHappyNewYear % showName, friend['UserName'])
+            happyNewYear = SINCERE_WISH + Title
+            # itchat.send(happyNewYear % showName, friend['UserName'])
+            print(happyNewYear % showName, friend['UserName'])
 
         send_count = send_count + 1
         time.sleep(.5)
     else:
         notSendList.append(friend)
 
-    # print(SINCERE_WISH % (friend['DisplayName']
-    #      or friend['NickName']), friend['UserName'])
-    # time.sleep(.5)
-
 if namesDict:
-    print("send count",send_count)
+    print("send count", send_count)
 
-    print("unsend count",len(notSendList))
+    print("unsend count", len(notSendList))
     print(notSendList)
